@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="region_array">
+        <item>강남구</item>
+        <item>강동구</item>
+        <item>강북구</item>
+        <item>강서구</item>
+        <item>관악구</item>
+        <item>광진구</item>
+        <item>구로구</item>
+        <item>금천구</item>
+        <item>노원구</item>
+        <item>도봉구</item>
+        <item>동대문구</item>
+        <item>동작구</item>
+        <item>마포구</item>
+        <item>서대문구</item>
+        <item>서초구</item>
+        <item>성동구</item>
+        <item>성북구</item>
+        <item>송파구</item>
+        <item>양천구</item>
+        <item>영등포구</item>
+        <item>용산구</item>
+        <item>은평구</item>
+        <item>종로구</item>
+        <item>중구</item>
+        <item>중랑구</item>
+    </string-array>
+    <string-array name="img_array">
+        <item>@drawable/skyscraper</item>
+        <item>@drawable/dolmen</item>
+        <item>@drawable/buk</item>
+        <item>@drawable/airport</item>
+        <item>@drawable/hallasan_mountain</item>
+        <item>@drawable/park</item>
+        <item>@drawable/skyscraper</item>
+        <item>@drawable/lucky_bag</item>
+        <item>@drawable/mask</item>
+        <item>@drawable/kpop</item>
+        <item>@drawable/sungnyemun</item>
+        <item>@drawable/memoria</item>
+        <item>@drawable/stadium</item>
+        <item>@drawable/sungnyemun</item>
+        <item>@drawable/museum</item>
+        <item>@drawable/park</item>
+        <item>@drawable/buk</item>
+        <item>@drawable/land</item>
+        <item>@drawable/mugunghwa</item>
+        <item>@drawable/guk</item>
+        <item>@drawable/seoul_tower</item>
+        <item>@drawable/radio_station</item>
+        <item>@drawable/sejong_the_great</item>
+        <item>@drawable/city_hall</item>
+        <item>@drawable/fan</item>
+    </string-array>
+    <string-array name="product_array">
+        <item>고등어</item>
+        <item>오징어</item>
+        <item>명태</item>
+        <item>조기</item>
+        <item>달걀</item>
+        <item>닭고기</item>
+        <item>돼지고기</item>
+        <item>쇠고기</item>
+        <item>애호박</item>
+        <item>오이</item>
+        <item>상추</item>
+        <item>양파</item>
+        <item>무</item>
+        <item>배추</item>
+        <item>배</item>
+        <item>사과</item>
+    </string-array>
+</resources>
