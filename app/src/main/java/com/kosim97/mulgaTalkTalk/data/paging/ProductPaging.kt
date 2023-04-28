@@ -43,6 +43,7 @@ class ProductPaging(
             val responseData = mutableListOf<Detail>()
             if (data != null) {
                 responseData.addAll(data!!)
+                empty.emit(false)
             } else {
                 if (page == 1) {
                     empty.emit(true)
