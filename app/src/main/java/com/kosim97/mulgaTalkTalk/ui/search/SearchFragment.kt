@@ -57,12 +57,6 @@ class SearchFragment : Fragment() {
     private fun initView() {
         searchBinding.searchRv.also {
             it.adapter = searchAdapter
-            it.layoutManager = LinearLayoutManager(
-                mContext,
-                RecyclerView.VERTICAL,
-                true
-            )
-            it.addItemDecoration(DividerItemDecoration(mContext, 1))
         }
     }
 

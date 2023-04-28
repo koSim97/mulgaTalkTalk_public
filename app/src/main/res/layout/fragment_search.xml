@@ -27,34 +27,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/region_spinner"
+        <EditText
+            android:id="@+id/et_region_search"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:dropDownWidth="100dp"
-            android:entries="@array/region_array"
-            android:textAlignment="center"
-            android:popupBackground="@drawable/spinner_bg"
-            app:layout_constraintEnd_toStartOf="@+id/product_spinner"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="   예시: 강남   "
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textColorHint="#AEAEAE"
+            android:textSize="14dp"
+            android:background="@drawable/edit_box_shape"
+            app:layout_constraintEnd_toStartOf="@+id/et_product_search"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:selectedRegionItem="@={viewModel.regionItem}" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <Spinner
-            android:id="@+id/product_spinner"
+        <EditText
+            android:id="@+id/et_product_search"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginStart="10dp"
-            android:dropDownWidth="100dp"
-            android:entries="@array/product_array"
-            android:textAlignment="center"
-            android:popupBackground="@drawable/spinner_bg"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="   예시: 돼지고기   "
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLength="8"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textColorHint="#AEAEAE"
+            android:textSize="14dp"
+            android:background="@drawable/edit_box_shape"
             app:layout_constraintEnd_toStartOf="@+id/search_btn"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/region_spinner"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:selectedProductItem="@={viewModel.productItem}" />
+            app:layout_constraintStart_toEndOf="@+id/et_region_search"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <Button
             android:id="@+id/search_btn"
@@ -63,11 +80,11 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/btn_selector"
             android:fontFamily="@font/roboto_regular"
-            android:onClick="@{()-> viewModel.clickSearchBtn()}"
+            android:onClick="@{()-> viewModel.clickSearchBtn(etRegionSearch.getText().toString(), etProductSearch.getText().toString())}"
             android:text="검색"
             app:layout_constraintEnd_toStartOf="@+id/save_btn"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/product_spinner"
+            app:layout_constraintStart_toEndOf="@+id/et_product_search"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <Button
@@ -78,29 +95,22 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/btn_selector"
             android:fontFamily="@font/roboto_regular"
-            android:onClick="@{()-> viewModel.saveFavorite()}"
+            android:onClick="@{()-> viewModel.saveFavorite(etProductSearch.getText().toString(), etProductSearch.getText().toString())}"
             android:text="저장"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/search_btn"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <include
-            android:id="@+id/common_search"
-            layout="@layout/common_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_spinner" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             android:visibility="@{viewModel.isEmpty().booleanValue() ? View.GONE : View.VISIBLE, default = visible}"
-            app:layout_constraintTop_toBottomOf="@+id/common_search" />
+            app:layout_constraintTop_toBottomOf="@+id/save_btn" />
 
         <TextView
             android:id="@+id/empty_view"

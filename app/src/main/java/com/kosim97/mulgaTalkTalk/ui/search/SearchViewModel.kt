@@ -2,14 +2,7 @@ package com.kosim97.mulgaTalkTalk.ui.search
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
-import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -34,11 +27,11 @@ class SearchViewModel @Inject constructor(
     sharedPref: SharedPreferences,
     val app: Application
 ) : ViewModel() {
-    val regionItem = MutableStateFlow("")
-    val productItem = MutableStateFlow("")
+    var searchRegion = " "
+    var searchProduct = " "
 
     val isEmpty = MutableStateFlow(false)
-    val date = sharedPref.getString("KEY_API_DATE", appDate)
+    private val date = sharedPref.getString("KEY_API_DATE", appDate)
 
     private val _searchBtn = MutableSharedFlow<Boolean>(replay = 0)
     val searchBtn: SharedFlow<Boolean>
@@ -50,8 +43,8 @@ class SearchViewModel @Inject constructor(
             pagingSourceFactory = {
                 ProductPaging(
                     repository,
-                    regionItem.value,
-                    productItem.value,
+                    searchRegion,
+                    searchProduct,
                     date!!,
                     isEmpty
                 )
@@ -59,96 +52,24 @@ class SearchViewModel @Inject constructor(
         ).flow
     }
 
-    fun clickSearchBtn() {
+    fun clickSearchBtn(region: String, product: String) {
+        searchRegion = region.ifEmpty { " " }
+        searchProduct = product.ifEmpty { " " }
         viewModelScope.launch {
             _searchBtn.emit(true)
         }
     }
 
-    fun saveFavorite() {
-        Toast.makeText(app, "저장되었습니다.", Toast.LENGTH_SHORT).show()
-        viewModelScope.launch(Dispatchers.IO) {
-            roomInterface.saveFavorite(RoomEntity(regionItem.value, productItem.value))
-        }
-    }
-}
-
-object SearchRegionBindingAdapter {
-    @InverseBindingAdapter(attribute = "selectedRegionItem", event = "selectRegionAttrChanged")
-    @JvmStatic
-    fun Spinner.getSelectedItem(): Any {
-        return selectedItem
-    }
-
-    @BindingAdapter("selectRegionAttrChanged")
-    @JvmStatic
-    fun Spinner.setBindingListener(inverseBindingListener: InverseBindingListener) {
-        inverseBindingListener.run {
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (tag != position) {
-                        inverseBindingListener.onChange()
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
+    fun saveFavorite(region: String, product: String) {
+        val saveRegion = region.ifEmpty { " " }
+        val saveProduct = product.ifEmpty { " " }
+        if (saveRegion == " " && saveProduct == " ") {
+            Toast.makeText(app, "지역과 물품을 정확히 입력해주세요.", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(app, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+            viewModelScope.launch(Dispatchers.IO) {
+                roomInterface.saveFavorite(RoomEntity(saveRegion, saveProduct))
             }
-        }
-    }
-
-    @BindingAdapter("selectedRegionItem")
-    @JvmStatic
-    fun Spinner.setSelectedItem(selectedItem: Any) {
-        adapter.run {
-            val position = (adapter as ArrayAdapter<Any>).getPosition(selectedItem)
-            setSelection(position, false)
-            tag = position
-        }
-    }
-}
-
-object SearchProductBindingAdapter {
-    @InverseBindingAdapter(attribute = "selectedProductItem", event = "selectProductAttrChanged")
-    @JvmStatic
-    fun Spinner.getSelectedItem(): Any {
-        return selectedItem
-    }
-
-    @BindingAdapter("selectProductAttrChanged")
-    @JvmStatic
-    fun Spinner.setBindingListener(inverseBindingListener: InverseBindingListener) {
-        inverseBindingListener.run {
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (tag != position) {
-                        inverseBindingListener.onChange()
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-            }
-        }
-    }
-
-    @BindingAdapter("selectedProductItem")
-    @JvmStatic
-    fun Spinner.setSelectedItem(selectedItem: Any) {
-        adapter.run {
-            val position = (adapter as ArrayAdapter<Any>).getPosition(selectedItem)
-            setSelection(position, false)
-            tag = position
         }
     }
 }
