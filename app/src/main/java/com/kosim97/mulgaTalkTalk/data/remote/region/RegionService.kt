@@ -13,4 +13,9 @@ interface RegionService : RegionRemoteDataSource {
     override suspend fun getSampleRegion(
         @Path("START_INDEX") start: Int, @Path("END_INDEX") end: Int, @Path("M_GU_NAME") region: String
     ): Response<ApiData>
+
+    @GET("ListNecessariesPricesService/{START_INDEX}/{END_INDEX}/ / / / /{M_GU_NAME}")
+    override suspend fun getRegionDetail(
+        @Path("START_INDEX") start: Int, @Path("END_INDEX") end: Int, @Path("M_GU_NAME") region: String
+    ): Response<ApiData>
 }

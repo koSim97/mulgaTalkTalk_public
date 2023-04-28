@@ -7,4 +7,6 @@ import retrofit2.Response
 
 interface RegionRemoteDataSource {
     suspend fun getSampleRegion(start: Int, end: Int, region: String): Response<ApiData>
+
+    suspend fun getRegionDetail(start: Int, end: Int, region: String): Response<ApiData>
 }

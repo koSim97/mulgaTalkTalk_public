@@ -44,13 +44,7 @@ class HomeDetailActivity : AppCompatActivity() {
         }
 
         binding.homeDetailList.apply {
-            layoutManager = LinearLayoutManager(
-                this@HomeDetailActivity,
-                RecyclerView.VERTICAL,
-                false
-            )
             adapter = detailAdapter
-            addItemDecoration(DividerItemDecoration(this@HomeDetailActivity, 1))
         }
 
         val region = intent.getStringExtra("region")

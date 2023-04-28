@@ -26,16 +26,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/auto_slide"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_recyclerview"
             homeItem="@{viewModel.item}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:spanCount="3" />
+            app:layout_constraintTop_toBottomOf="@+id/auto_slide"
+            app:spanCount="5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

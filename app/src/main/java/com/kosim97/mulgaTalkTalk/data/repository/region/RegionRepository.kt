@@ -15,4 +15,8 @@ class RegionRepository @Inject constructor(
     fun getSampleRegion(start: Int, end: Int, region: String) : Flow<ApiResult<ApiData>> = flow {
         emit(flowCall(remote.getSampleRegion(start, end, region)))
     }
+
+    fun getRegionDetail(start: Int, end: Int, region: String): Flow<ApiResult<ApiData>> = flow {
+        emit(flowCall(remote.getRegionDetail(start, end, region)))
+    }
 }

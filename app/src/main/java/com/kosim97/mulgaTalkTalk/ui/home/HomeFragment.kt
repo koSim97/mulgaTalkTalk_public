@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.kosim97.mulgaTalkTalk.data.local.model.AutoSlideData
 import com.kosim97.mulgaTalkTalk.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,6 +15,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
     private var isInitView = false
+    private lateinit var slideAdapter: AutoSlideAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +35,12 @@ class HomeFragment : Fragment() {
             homeViewModel.initData()
             isInitView = true
         }
+        val slideItem = mutableListOf<AutoSlideData>()
+        slideItem.add(AutoSlideData("test"))
+        slideItem.add(AutoSlideData("test1"))
+        slideAdapter = AutoSlideAdapter()
+        binding.autoSlide.adapter = slideAdapter
+        slideAdapter.submitList(slideItem)
         homeViewModel.test()
     }
 }

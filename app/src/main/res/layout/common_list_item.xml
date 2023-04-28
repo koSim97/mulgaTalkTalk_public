@@ -3,97 +3,216 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="detailItem"
             type="com.kosim97.mulgaTalkTalk.data.Detail" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/detail_item_shape">
 
         <TextView
             android:id="@+id/m_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAlignment="center"
             android:layout_gravity="center"
-            android:text="@{detailItem.marketName}"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/roboto_regular"
+            android:text="@{detailItem.marketName}"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="18dp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/black" />
+            android:textSize="15dp"
+            android:visibility="@{detailItem.marketName.empty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="dasdas" />
 
         <TextView
             android:id="@+id/p_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAlignment="center"
             android:layout_gravity="center"
-            android:text="@{detailItem.productName}"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/roboto_regular"
+            android:text="@{detailItem.productName}"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="18dp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/black" />
+            android:textSize="15dp"
+            android:visibility="@{detailItem.productName.empty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/m_name"
+            tools:text="dasdas123" />
 
         <TextView
             android:id="@+id/p_unit"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:textAlignment="center"
             android:layout_gravity="center"
             android:text="@{detailItem.productUnit}"
             android:fontFamily="@font/roboto_regular"
-            android:textColor="@color/black"
-            android:textSize="18dp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/black" />
+            android:textColor="#666666"
+            android:textSize="13dp"
+            android:visibility="@{detailItem.productUnit.empty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/p_name"/>
 
         <TextView
             android:id="@+id/p_price"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:textAlignment="center"
             android:layout_gravity="center"
-            android:text="@{detailItem.productPrice}"
+            android:text="@{detailItem.productPrice +'원'}"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/black"
-            android:textSize="18dp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/black" />
+            android:textSize="15dp"
+            android:visibility="@{detailItem.productPrice.empty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/p_unit"/>
 
         <TextView
             android:id="@+id/p_info"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:textAlignment="center"
             android:layout_gravity="center"
             android:text="@{detailItem.productInfo}"
             android:fontFamily="@font/roboto_regular"
-            android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textColor="#666666"
+            android:textSize="13dp"
+            android:visibility="@{detailItem.productInfo.empty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/p_price"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/m_name"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:layout_marginBottom="3dp"-->
+<!--            android:layout_marginStart="3dp"-->
+<!--            android:layout_marginEnd="3dp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="@{detailItem.marketName}"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18dp"-->
+<!--            android:background="@drawable/detail_item_shape"-->
+<!--            android:visibility="@{detailItem.marketName.empty ? View.GONE : View.VISIBLE}"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/p_name"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:layout_marginBottom="3dp"-->
+<!--            android:layout_marginStart="3dp"-->
+<!--            android:layout_marginEnd="3dp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="@{detailItem.productName}"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18dp"-->
+<!--            android:background="@drawable/detail_item_shape"-->
+<!--            android:visibility="@{detailItem.productName.empty ? View.GONE : View.VISIBLE}"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/p_unit"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:layout_marginBottom="3dp"-->
+<!--            android:layout_marginStart="3dp"-->
+<!--            android:layout_marginEnd="3dp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="@{detailItem.productUnit}"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18dp"-->
+<!--            android:background="@drawable/detail_item_shape"-->
+<!--            android:visibility="@{detailItem.productUnit.empty ? View.GONE : View.VISIBLE}"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/p_price"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:layout_marginBottom="3dp"-->
+<!--            android:layout_marginStart="3dp"-->
+<!--            android:layout_marginEnd="3dp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="@{detailItem.productPrice +'원'}"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18dp"-->
+<!--            android:background="@drawable/detail_item_shape"-->
+<!--            android:visibility="@{detailItem.productPrice.empty ? View.GONE : View.VISIBLE}"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/p_info"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:layout_marginBottom="3dp"-->
+<!--            android:layout_marginStart="3dp"-->
+<!--            android:layout_marginEnd="3dp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="@{detailItem.productInfo}"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18dp"-->
+<!--            android:background="@drawable/detail_item_shape"-->
+<!--            android:visibility="@{detailItem.productInfo.empty ? View.GONE : View.VISIBLE}"/>-->
+
+<!--    </LinearLayout>-->
 
 
 </layout>
