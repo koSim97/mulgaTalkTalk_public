@@ -9,13 +9,15 @@
             type="com.kosim97.mulgaTalkTalk.data.Detail" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        android:gravity="center"
         android:background="@drawable/detail_item_shape">
 
         <TextView
@@ -115,104 +117,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/p_price"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/m_name"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginTop="3dp"-->
-<!--            android:layout_marginBottom="3dp"-->
-<!--            android:layout_marginStart="3dp"-->
-<!--            android:layout_marginEnd="3dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:text="@{detailItem.marketName}"-->
-<!--            android:fontFamily="@font/roboto_regular"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18dp"-->
-<!--            android:background="@drawable/detail_item_shape"-->
-<!--            android:visibility="@{detailItem.marketName.empty ? View.GONE : View.VISIBLE}"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/p_name"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginTop="3dp"-->
-<!--            android:layout_marginBottom="3dp"-->
-<!--            android:layout_marginStart="3dp"-->
-<!--            android:layout_marginEnd="3dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:text="@{detailItem.productName}"-->
-<!--            android:fontFamily="@font/roboto_regular"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18dp"-->
-<!--            android:background="@drawable/detail_item_shape"-->
-<!--            android:visibility="@{detailItem.productName.empty ? View.GONE : View.VISIBLE}"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/p_unit"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginTop="3dp"-->
-<!--            android:layout_marginBottom="3dp"-->
-<!--            android:layout_marginStart="3dp"-->
-<!--            android:layout_marginEnd="3dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:text="@{detailItem.productUnit}"-->
-<!--            android:fontFamily="@font/roboto_regular"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18dp"-->
-<!--            android:background="@drawable/detail_item_shape"-->
-<!--            android:visibility="@{detailItem.productUnit.empty ? View.GONE : View.VISIBLE}"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/p_price"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginTop="3dp"-->
-<!--            android:layout_marginBottom="3dp"-->
-<!--            android:layout_marginStart="3dp"-->
-<!--            android:layout_marginEnd="3dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:text="@{detailItem.productPrice +'원'}"-->
-<!--            android:fontFamily="@font/roboto_regular"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18dp"-->
-<!--            android:background="@drawable/detail_item_shape"-->
-<!--            android:visibility="@{detailItem.productPrice.empty ? View.GONE : View.VISIBLE}"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/p_info"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginTop="3dp"-->
-<!--            android:layout_marginBottom="3dp"-->
-<!--            android:layout_marginStart="3dp"-->
-<!--            android:layout_marginEnd="3dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:text="@{detailItem.productInfo}"-->
-<!--            android:fontFamily="@font/roboto_regular"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18dp"-->
-<!--            android:background="@drawable/detail_item_shape"-->
-<!--            android:visibility="@{detailItem.productInfo.empty ? View.GONE : View.VISIBLE}"/>-->
-
-<!--    </LinearLayout>-->
-
-
+    </LinearLayout>
 </layout>
