@@ -6,11 +6,11 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.kosim97.mulgaTalkTalk.data.Detail
 import com.kosim97.mulgaTalkTalk.data.room.RoomEntity
 import com.kosim97.mulgaTalkTalk.data.room.RoomInterface
 import com.kosim97.mulgaTalkTalk.data.paging.ProductPaging
-import com.kosim97.mulgaTalkTalk.data.repository.ApiRepository
+import com.kosim97.mulgaTalkTalk.data.remote.model.ResultData
+import com.kosim97.mulgaTalkTalk.data.repository.product.ProductRepository
 import com.kosim97.mulgaTalkTalk.di.AppDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: ApiRepository,
+    private val repository: ProductRepository,
     private val roomInterface: RoomInterface,
     @AppDate
     private val appDate: String,
@@ -37,7 +37,7 @@ class SearchViewModel @Inject constructor(
     val searchBtn: SharedFlow<Boolean>
         get() = _searchBtn
 
-    fun getSearchData(): Flow<PagingData<Detail>> {
+    fun getSearchData(): Flow<PagingData<ResultData>> {
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
             pagingSourceFactory = {

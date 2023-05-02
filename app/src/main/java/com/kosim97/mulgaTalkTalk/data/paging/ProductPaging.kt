@@ -3,32 +3,36 @@ package com.kosim97.mulgaTalkTalk.data.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.kosim97.mulgaTalkTalk.data.Detail
 import com.kosim97.mulgaTalkTalk.data.api.ApiResult
-import com.kosim97.mulgaTalkTalk.data.repository.ApiRepository
+import com.kosim97.mulgaTalkTalk.data.remote.model.ResultData
+import com.kosim97.mulgaTalkTalk.data.repository.product.ProductRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 
 class ProductPaging(
-    private val repository: ApiRepository,
+    private val repository: ProductRepository,
     private val region: String,
     private val product: String,
     private val date: String,
     private val empty: MutableStateFlow<Boolean>
-) : PagingSource<Int, Detail>() {
-    override fun getRefreshKey(state: PagingState<Int, Detail>): Int {
+) : PagingSource<Int, ResultData>() {
+    override fun getRefreshKey(state: PagingState<Int, ResultData>): Int {
         return 0
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Detail> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ResultData> {
         return try {
             val page = params.key ?: 1
             var nextKey: Int? = if (page == 0) 10 else page + 10
-            var data: ArrayList<Detail>? = null
+            var data: ArrayList<ResultData>? = null
 
             val response =
                 nextKey?.let { repository.getProductDetail(page, it, region, product, date) }
-            response?.collect {
+            response
+                ?.flowOn(Dispatchers.IO)
+                ?.collect {
                 when (it) {
                     is ApiResult.Success -> {
                         data = it.data?.list?.row
@@ -40,7 +44,7 @@ class ProductPaging(
                 }
             }
 
-            val responseData = mutableListOf<Detail>()
+            val responseData = mutableListOf<ResultData>()
             if (data != null) {
                 responseData.addAll(data!!)
                 empty.emit(false)

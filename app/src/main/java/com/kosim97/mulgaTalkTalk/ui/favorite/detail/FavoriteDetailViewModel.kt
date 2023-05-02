@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.kosim97.mulgaTalkTalk.data.Detail
 import com.kosim97.mulgaTalkTalk.data.paging.ProductPaging
-import com.kosim97.mulgaTalkTalk.data.repository.ApiRepository
+import com.kosim97.mulgaTalkTalk.data.remote.model.ResultData
+import com.kosim97.mulgaTalkTalk.data.repository.product.ProductRepository
 import com.kosim97.mulgaTalkTalk.data.room.RoomInterface
 import com.kosim97.mulgaTalkTalk.di.AppDate
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteDetailViewModel @Inject constructor(
-    private val repository: ApiRepository,
+    private val repository: ProductRepository,
     @AppDate
     private val appDate: String,
     sharedPref: SharedPreferences,
@@ -47,7 +47,7 @@ class FavoriteDetailViewModel @Inject constructor(
         title = "$mRegion $mProduct"
     }
 
-    fun getFavoriteDetailData(): Flow<PagingData<Detail>> {
+    fun getFavoriteDetailData(): Flow<PagingData<ResultData>> {
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
             pagingSourceFactory = { ProductPaging(repository, mRegion, mProduct, date!!, isEmpty)}

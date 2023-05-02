@@ -5,9 +5,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.kosim97.mulgaTalkTalk.data.Detail
 import com.kosim97.mulgaTalkTalk.data.paging.RegionPaging
-import com.kosim97.mulgaTalkTalk.data.repository.ApiRepository
+import com.kosim97.mulgaTalkTalk.data.remote.model.ResultData
+import com.kosim97.mulgaTalkTalk.data.repository.region.RegionRepository
 import com.kosim97.mulgaTalkTalk.di.AppDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeDetailViewModel @Inject constructor(
-    private val repository: ApiRepository,
+    private val repository: RegionRepository,
     @AppDate
     private val appDate: String,
     sharedPref: SharedPreferences
@@ -34,7 +34,7 @@ class HomeDetailViewModel @Inject constructor(
         mRegion = region
     }
 
-    fun getDataList(): Flow<PagingData<Detail>> {
+    fun getDataList(): Flow<PagingData<ResultData>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { RegionPaging(repository, mRegion, date!!, isEmpty) }

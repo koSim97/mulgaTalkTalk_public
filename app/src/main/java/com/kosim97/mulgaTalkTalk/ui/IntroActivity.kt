@@ -7,16 +7,15 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.kosim97.mulgaTalkTalk.MainActivity
 import com.kosim97.mulgaTalkTalk.data.api.ApiResult
-import com.kosim97.mulgaTalkTalk.data.repository.ApiRepository
 import com.kosim97.mulgaTalkTalk.di.AppDate
 import com.kosim97.mulgaTalkTalk.ui.common.CommonPopup
 import com.kosim97.mulgaTalkTalk.ui.common.LoadingDialog
 import com.kosim97.mulgaTalkTalk.R
+import com.kosim97.mulgaTalkTalk.data.repository.all.AllRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -26,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class IntroActivity : AppCompatActivity() {
     @Inject
-    lateinit var apiRepository: ApiRepository
+    lateinit var repository: AllRepository
     @Inject
     lateinit var sharedPref: SharedPreferences
     @AppDate
@@ -64,27 +63,25 @@ class IntroActivity : AppCompatActivity() {
 
     private suspend fun getApiData() {
         loadingDialog.show()
-        apiRepository.getAllDetail(1, 1)
+        repository.getAllData(1, 1)
             .flowOn(Dispatchers.IO)
-            .collect {
-                when (it) {
-                    is ApiResult.Success -> {
-                        val date = it.data?.list?.row?.get(0)?.updateMonth
-                        if (date != null && date != mDate) {
-                            Log.d("test", "$date, $mDate")
-                            sharedPref.edit().putString("KEY_API_DATE", date).apply()
-                        }
-                        loadingDialog.dismiss()
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+            .collect{
+            when (it) {
+                is ApiResult.Success -> {
+                    val date = it.data?.list?.row?.get(0)?.updateMonth
+                    if (date != null && date != mDate) {
+                        sharedPref.edit().putString("KEY_API_DATE", date).apply()
                     }
-                    else -> {
-                        loadingDialog.dismiss()
-                        showNetworkErrorPopup()
-                        Log.d("test", "fail $it")
-                    }
+                    loadingDialog.dismiss()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+                else -> {
+                    loadingDialog.dismiss()
+                    showNetworkErrorPopup()
                 }
             }
+        }
     }
 
     private fun showNetworkErrorPopup() {

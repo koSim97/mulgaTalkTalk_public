@@ -4,8 +4,11 @@ import android.content.Context
 import android.view.View
 import com.kosim97.mulgaTalkTalk.BuildConfig
 import com.kosim97.mulgaTalkTalk.R
-import com.kosim97.mulgaTalkTalk.data.api.ApiService
+import com.kosim97.mulgaTalkTalk.data.remote.all.AllService
+import com.kosim97.mulgaTalkTalk.data.remote.product.ProductService
 import com.kosim97.mulgaTalkTalk.data.remote.region.RegionService
+import com.kosim97.mulgaTalkTalk.data.repository.all.AllRemoteDataSource
+import com.kosim97.mulgaTalkTalk.data.repository.product.ProductRemoteDataSource
 import com.kosim97.mulgaTalkTalk.data.repository.region.RegionRemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -60,17 +63,25 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiService(
-        retrofit: Retrofit
-    ): ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
-
-    @Singleton
-    @Provides
     fun provideRegionRemoteDataSource(
         retrofit: Retrofit
     ): RegionRemoteDataSource {
         return retrofit.create(RegionService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideProductRemoteDataSource(
+        retrofit: Retrofit
+    ): ProductRemoteDataSource {
+        return retrofit.create(ProductService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAllRemoteDataSource(
+        retrofit: Retrofit
+    ): AllRemoteDataSource {
+        return retrofit.create(AllService::class.java)
     }
 }

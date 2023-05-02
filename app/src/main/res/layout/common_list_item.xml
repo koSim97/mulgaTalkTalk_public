@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="detailItem"
-            type="com.kosim97.mulgaTalkTalk.data.Detail" />
+            type="com.kosim97.mulgaTalkTalk.data.remote.model.ResultData" />
     </data>
 
     <LinearLayout

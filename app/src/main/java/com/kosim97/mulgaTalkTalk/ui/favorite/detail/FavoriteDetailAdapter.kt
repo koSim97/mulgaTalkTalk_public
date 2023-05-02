@@ -6,24 +6,25 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kosim97.mulgaTalkTalk.data.Detail
+import com.kosim97.mulgaTalkTalk.data.remote.model.ResultData
 import com.kosim97.mulgaTalkTalk.databinding.CommonListItemBinding
 
 class FavoriteDetailAdapter :
-    PagingDataAdapter<Detail, FavoriteDetailAdapter.FavoriteDetailViewHolder>(diffUtil) {
+    PagingDataAdapter<ResultData, FavoriteDetailAdapter.FavoriteDetailViewHolder>(diffUtil) {
     inner class FavoriteDetailViewHolder(val binding: CommonListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindItem(currentItem: Detail) {
+        fun bindItem(currentItem: ResultData) {
             binding.detailItem = currentItem
         }
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<Detail>() {
-            override fun areItemsTheSame(oldItem: Detail, newItem: Detail): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<ResultData>() {
+            override fun areItemsTheSame(oldItem: ResultData, newItem: ResultData): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: Detail, newItem: Detail): Boolean {
+            override fun areContentsTheSame(oldItem: ResultData, newItem: ResultData): Boolean {
                 return oldItem.hashCode() == newItem.hashCode()
             }
         }
