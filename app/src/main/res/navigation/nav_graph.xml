@@ -17,16 +17,8 @@
             android:id="@+id/action_homeFragment_to_favoriteFragment2"
             app:destination="@id/navigation_favorites" />
         <action
-            android:id="@+id/action_navigation_home_to_homeDetailFragment"
-            app:destination="@id/homeDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/homeDetailFragment"
-        android:name="com.kosim97.mulgaTalkTalk.ui.home.detailFragment.HomeDetailFragment"
-        android:label="HomeDetailFragment" >
-        <argument
-            android:name="myArg"
-            app:argType="string" />
+            android:id="@+id/action_navigation_home_to_monthChartFragment"
+            app:destination="@id/monthChartFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_favorites"
@@ -38,4 +30,8 @@
         android:name="com.kosim97.mulgaTalkTalk.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/monthChartFragment"
+        android:name="com.kosim97.mulgaTalkTalk.ui.home.chart.MonthChartFragment"
+        android:label="MonthChartFragment" />
 </navigation>

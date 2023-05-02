@@ -87,6 +87,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.4.3")
 
     implementation 'com.airbnb.android:lottie:3.7.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 
 }

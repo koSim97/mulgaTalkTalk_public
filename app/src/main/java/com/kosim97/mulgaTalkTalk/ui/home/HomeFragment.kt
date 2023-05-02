@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.kosim97.mulgaTalkTalk.R
 import com.kosim97.mulgaTalkTalk.data.local.model.AutoSlideData
 import com.kosim97.mulgaTalkTalk.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,5 +44,8 @@ class HomeFragment : Fragment() {
         binding.autoSlide.adapter = slideAdapter
         slideAdapter.submitList(slideItem)
         homeViewModel.test()
+        binding.navigateChart.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_monthChartFragment)
+        }
     }
 }
