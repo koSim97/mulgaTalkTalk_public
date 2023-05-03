@@ -1,6 +1,7 @@
 package com.kosim97.mulgaTalkTalk.ui.home.chart
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ class MonthChartFragment : Fragment() {
     private val chartViewModel : MonthChartViewModel by viewModels()
     private lateinit var lineData: LineData
     private val label = mutableListOf<String>()
-    var index = 1
+    private lateinit var lineDataSet: LineDataSet
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +45,9 @@ class MonthChartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            chartViewModel.getFiveMonthData()
-        }
+//        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+//            chartViewModel.getFiveMonthData()
+//        }
         initView()
     }
 
@@ -88,19 +89,20 @@ class MonthChartFragment : Fragment() {
     }
 
     private fun setChartData() {
-        val lineDataSet= LineDataSet(null,"강남구 돼지고기")
+        lineDataSet = LineDataSet(null,"")
         lineDataSet.setDrawValues(true)
         lineDataSet.lineWidth = 5f
         lineDataSet.valueTextSize = 15f
 
         lineData = LineData(lineDataSet)
-        label.add("")
     }
 
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 chartViewModel.chartDataList.collectLatest{
+                    var index = 1
+                    clearData()
                     it.onEach { item ->
                         label.add(item.date)
                         lineData.addEntry(Entry(index.toFloat(), item.price.toFloat()), 0)
@@ -109,11 +111,32 @@ class MonthChartFragment : Fragment() {
                     binding.monthChart.let {chart ->
                         chart.xAxis.valueFormatter = IndexAxisValueFormatter(label)
                         chart.data = lineData
-                        chart.notifyDataSetChanged()
                         chart.moveViewToX(lineData.entryCount.toFloat())
                     }
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                chartViewModel.labelText.collectLatest {
+                    lineDataSet.label = it
+                }
+            }
+        }
+    }
+
+    private fun clearData() {
+        label.clear()
+        label.add("")
+        binding.monthChart.data?.clearValues()
+        lineDataSet.clear()
+        lineData.clearValues()
+        binding.monthChart.clear()
+        lineData = LineData(lineDataSet)
+        lineData.notifyDataChanged()
+        lineDataSet.notifyDataSetChanged()
+        binding.monthChart.notifyDataSetChanged()
+        binding.monthChart.invalidate()
     }
 }
