@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "528900546032",
+    "project_id": "mulgatalktalk",
+    "storage_bucket": "mulgatalktalk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528900546032:android:8586c5b1d41c2405415135",
+        "android_client_info": {
+          "package_name": "com.kosim97.mulgaTalkTalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528900546032-2ihp2dmhvo2jvoqik2gfnjh16r5aha46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmfA3UqwsJcLdSIE4LWNU7iGdLjX-bHL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528900546032-2ihp2dmhvo2jvoqik2gfnjh16r5aha46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,16 +1,23 @@
 package com.kosim97.mulgaTalkTalk.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.kosim97.mulgaTalkTalk.R
 import com.kosim97.mulgaTalkTalk.data.local.model.AutoSlideData
 import com.kosim97.mulgaTalkTalk.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -18,6 +25,7 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private var isInitView = false
     private lateinit var slideAdapter: AutoSlideAdapter
+    private val slideItem = mutableListOf<AutoSlideData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,15 +45,30 @@ class HomeFragment : Fragment() {
             homeViewModel.initData()
             isInitView = true
         }
-        val slideItem = mutableListOf<AutoSlideData>()
-        slideItem.add(AutoSlideData("test"))
-        slideItem.add(AutoSlideData("test1"))
         slideAdapter = AutoSlideAdapter()
         binding.autoSlide.adapter = slideAdapter
-        slideAdapter.submitList(slideItem)
-        homeViewModel.test()
+        initObserver()
+        homeViewModel.getFirebase()
         binding.navigateChart.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_monthChartFragment)
         }
+    }
+
+    private fun initObserver() {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.slideDataList.collect {
+                    Log.d("test","asd $it")
+                    setSlideItem(it)
+                }
+            }
+        }
+    }
+
+    private fun setSlideItem(data: List<String>) {
+        data.onEach {
+            slideItem.add(AutoSlideData(it))
+        }
+        slideAdapter.submitList(slideItem)
     }
 }
