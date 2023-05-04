@@ -28,14 +28,24 @@ class MonthChartViewModel @Inject constructor(
     private val _labelText = MutableStateFlow("")
     val labelText: StateFlow<String>
         get() = _labelText
+    private val _loading = MutableSharedFlow<Boolean>(0)
+    val loading: SharedFlow<Boolean>
+        get() = _loading
+    private val _backBtn = MutableSharedFlow<Boolean>(0)
+    val backBtn: SharedFlow<Boolean>
+        get() = _backBtn
+
+    val isEmpty = MutableStateFlow(false)
 
     fun getFiveMonthData(region: String, product: String) {
         val splitDate = appDate.split("-").map { it }
         val cal = Calendar.getInstance()
         var end = 5
+        var cnt = 0
         cal.set(splitDate[0].toInt(), splitDate[1].toInt(),1)
 
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             chartList.clear()
             while (end != 0) {
                 val date = SimpleDateFormat("yyyy-MM").format(cal.time)
@@ -48,10 +58,12 @@ class MonthChartViewModel @Inject constructor(
                                 if (price != null) {
                                     chartList.add(ChartData(date, price))
                                     end--
+                                } else {
+                                    cnt++
                                 }
                             }
                             else -> {
-
+                                cnt++
                             }
                         }
                     }
@@ -61,9 +73,22 @@ class MonthChartViewModel @Inject constructor(
                 } else {
                     cal.add(Calendar.MONTH, -1)
                 }
+                if (cnt > 5) {
+                    isEmpty.emit(true)
+                    break
+                } else {
+                    isEmpty.emit(false)
+                }
             }
             _chartDataList.emit(chartList.reversed())
             _labelText.emit("$region $product")
+            _loading.emit(false)
+        }
+    }
+
+    fun clickBackBtn() {
+        viewModelScope.launch(Dispatchers.Main) {
+            _backBtn.emit(true)
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -17,6 +18,8 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.kosim97.mulgaTalkTalk.databinding.FragmentMonthChartBinding
+import com.kosim97.mulgaTalkTalk.ui.common.LoadingDialog
+import com.kosim97.mulgaTalkTalk.util.NavigationUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -29,6 +32,7 @@ class MonthChartFragment : Fragment() {
     private lateinit var lineData: LineData
     private val label = mutableListOf<String>()
     private lateinit var lineDataSet: LineDataSet
+    private var loadingDialog: LoadingDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,13 +49,17 @@ class MonthChartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-//            chartViewModel.getFiveMonthData()
-//        }
         initView()
     }
 
+    override fun onDestroyView() {
+        (requireActivity() as NavigationUtil).visibleNav(true)
+        super.onDestroyView()
+    }
+
     private fun initView() {
+        loadingDialog = LoadingDialog(requireContext())
+        (requireActivity() as NavigationUtil).visibleNav(false)
         initChart()
         setChartData()
         initObserver()
@@ -66,6 +74,8 @@ class MonthChartFragment : Fragment() {
             it.setPinchZoom(false)
             it.setVisibleXRange(5f, 5f)
             it.axisRight.isEnabled = false
+            it.setNoDataText("")
+            it.extraRightOffset = 20f
             it.legend.apply {
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
@@ -124,7 +134,26 @@ class MonthChartFragment : Fragment() {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                chartViewModel.loading.collectLatest {
+                    showDialog(it)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                chartViewModel.backBtn.collectLatest {
+
+                    findNavController().popBackStack()
+                }
+            }
+        }
     }
+
+
 
     private fun clearData() {
         label.clear()
@@ -138,5 +167,13 @@ class MonthChartFragment : Fragment() {
         lineDataSet.notifyDataSetChanged()
         binding.monthChart.notifyDataSetChanged()
         binding.monthChart.invalidate()
+    }
+
+    private fun showDialog(show: Boolean) {
+        if (show) {
+            loadingDialog?.show()
+        } else {
+            loadingDialog?.dismiss()
+        }
     }
 }
