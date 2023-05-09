@@ -72,4 +72,9 @@
         <item>배</item>
         <item>사과</item>
     </string-array>
+    <string-array name="slide_img_array">
+        <item>@drawable/banner</item>
+        <item>@drawable/banner2</item>
+        <item>@drawable/banner3</item>
+    </string-array>
 </resources>

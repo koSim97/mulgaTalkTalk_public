@@ -15,10 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{slide_item.title}"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20dp"
+            android:background="@{slide_item.img}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="dsadasdasdasd" />

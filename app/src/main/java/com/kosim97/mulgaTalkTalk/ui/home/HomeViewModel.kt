@@ -8,12 +8,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.kosim97.mulgaTalkTalk.data.HomeData
 import com.kosim97.mulgaTalkTalk.R
-import com.kosim97.mulgaTalkTalk.data.api.ApiResult
-import com.kosim97.mulgaTalkTalk.data.local.model.ChartData
 import com.kosim97.mulgaTalkTalk.data.repository.region.RegionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +28,6 @@ class HomeViewModel @Inject constructor(
     val item = ArrayList<HomeData>()
     private val img = app.resources.obtainTypedArray(R.array.img_array)
 
-    val slideItem = MutableStateFlow("")
     private val slideList = mutableListOf<String>()
     private val _slideDataList = MutableSharedFlow<List<String>>(0)
     val slideDataList: SharedFlow<List<String>>

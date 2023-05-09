@@ -41,14 +41,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+        initObserver()
+    }
+
+    private fun initView() {
         if (!isInitView) {
+            slideAdapter = AutoSlideAdapter()
             homeViewModel.initData()
+            homeViewModel.getFirebase()
             isInitView = true
         }
-        slideAdapter = AutoSlideAdapter()
         binding.autoSlide.adapter = slideAdapter
-        initObserver()
-        homeViewModel.getFirebase()
         binding.navigateChart.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_monthChartFragment)
         }
@@ -66,8 +70,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setSlideItem(data: List<String>) {
-        data.onEach {
-            slideItem.add(AutoSlideData(it))
+        val img = this.resources.obtainTypedArray(R.array.slide_img_array)
+        data.forEachIndexed { index, s ->
+            slideItem.add(AutoSlideData(s, img.getDrawable(index)!!))
         }
         slideAdapter.submitList(slideItem)
     }
