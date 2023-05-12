@@ -39,12 +39,6 @@ class HomeDetailViewModel @Inject constructor(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { RegionPaging(repository, mRegion, date!!, isEmpty) }
         ).flow
-            .map { pagingData ->
-            pagingData.filter {
-                //isEmpty.emit(true)
-                it.updateMonth == date
-            }
-        }
     }
 
     fun clickBackBtn() {
