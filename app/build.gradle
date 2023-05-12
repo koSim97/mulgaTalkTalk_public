@@ -41,15 +41,6 @@ android {
     dataBinding {
         enabled = true
     }
-
-    signingConfigs {
-        release {
-            keyAlias "key0"
-            keyPassword "qwer123456!"
-            storeFile file("../keystore/mulgatalktalk.jks")
-            storePassword "qwer123456!"
-        }
-    }
 }
 
 dependencies {
