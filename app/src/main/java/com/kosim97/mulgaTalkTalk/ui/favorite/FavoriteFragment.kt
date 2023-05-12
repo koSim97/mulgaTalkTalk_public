@@ -55,8 +55,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun initObserver() {
-        favoriteViewModel.getAll()
-        lifecycleScope.launch(Dispatchers.IO) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 favoriteViewModel.getRoomData().collectLatest {
                     favoriteAdapter.submitData(it)

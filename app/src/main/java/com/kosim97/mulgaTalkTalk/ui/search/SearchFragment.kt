@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -61,7 +62,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun initObserver() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             searchViewModel.searchBtn.collectLatest { click ->
                 if (click) {
                     repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -73,7 +74,7 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loadingDialog = LoadingDialog(mContext)
                 searchAdapter.loadStateFlow.collectLatest { loadStates ->
@@ -88,6 +89,18 @@ class SearchFragment : Fragment() {
                                 loadingDialog?.dismiss()
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch{
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchViewModel.isSameItem.collectLatest {
+                    if (it) {
+                        Toast.makeText(mContext, "저장되었어요.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(mContext, "존재하는 즐겨찾기에요.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

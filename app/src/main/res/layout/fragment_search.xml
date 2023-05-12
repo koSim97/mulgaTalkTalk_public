@@ -86,7 +86,7 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/btn_selector"
             android:fontFamily="@font/roboto_regular"
-            android:onClick="@{()-> viewModel.saveFavorite(etProductSearch.getText().toString(), etProductSearch.getText().toString())}"
+            android:onClick="@{()-> viewModel.saveFavorite(etRegionSearch.getText().toString(), etProductSearch.getText().toString())}"
             android:text="저장"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

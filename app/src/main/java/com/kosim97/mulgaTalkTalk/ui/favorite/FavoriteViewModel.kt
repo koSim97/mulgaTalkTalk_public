@@ -13,16 +13,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-    val roomInterface: RoomInterface
+    private val roomInterface: RoomInterface
 ): ViewModel() {
     fun getRoomData() = Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
             pagingSourceFactory = { FavoriteDBPaging(roomInterface) }
         ).flow
 
-    fun getAll() {
-        viewModelScope.launch {
-            Log.d("test","${roomInterface.getAll()}")
-        }
-    }
 }

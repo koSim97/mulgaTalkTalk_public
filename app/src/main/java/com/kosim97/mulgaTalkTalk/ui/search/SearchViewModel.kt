@@ -37,6 +37,10 @@ class SearchViewModel @Inject constructor(
     val searchBtn: SharedFlow<Boolean>
         get() = _searchBtn
 
+    private val _isSameItem = MutableSharedFlow<Boolean>(replay = 0)
+    val isSameItem: SharedFlow<Boolean>
+        get() = _isSameItem
+
     fun getSearchData(): Flow<PagingData<ResultData>> {
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
@@ -66,9 +70,19 @@ class SearchViewModel @Inject constructor(
         if (saveRegion == " " && saveProduct == " ") {
             Toast.makeText(app, "지역과 물품을 정확히 입력해주세요.", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(app, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+            var save = true
             viewModelScope.launch(Dispatchers.IO) {
-                roomInterface.saveFavorite(RoomEntity(saveRegion, saveProduct))
+                val list = roomInterface.getAll()
+                for (i in list.indices) {
+                    if (list[i].room_product == saveProduct && list[i].room_region == saveRegion) {
+                        save = false
+                        _isSameItem.emit(false)
+                    }
+                }
+                if (save) {
+                    _isSameItem.emit(true)
+                    roomInterface.saveFavorite(RoomEntity(saveRegion, saveProduct))
+                }
             }
         }
     }
