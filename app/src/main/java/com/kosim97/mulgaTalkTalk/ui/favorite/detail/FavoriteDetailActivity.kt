@@ -52,12 +52,6 @@ class FavoriteDetailActivity : AppCompatActivity() {
         }
 
         favoriteDetailBinding.favoriteDetailRv.apply {
-            layoutManager = LinearLayoutManager(
-                this@FavoriteDetailActivity,
-                RecyclerView.VERTICAL,
-                false
-            )
-            addItemDecoration(DividerItemDecoration(this@FavoriteDetailActivity, 1))
             adapter = favoriteDetailAdapter
         }
         loadingDialog = LoadingDialog(this)

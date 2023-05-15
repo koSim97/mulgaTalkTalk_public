@@ -40,24 +40,16 @@
 
         <Button
             android:layout_width="55dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/btn_selector"
             android:fontFamily="@font/roboto_regular"
+            android:onClick="@{() -> viewModel.deleteDB()}"
             android:text="삭제"
             android:textColor="@color/black"
-            android:onClick="@{() -> viewModel.deleteDB()}"
-            app:layout_constraintBottom_toTopOf="@+id/common_i"
+            app:layout_constraintBottom_toBottomOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <include
-            android:id="@+id/common_i"
-            layout="@layout/common_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favorite_detail_rv"
@@ -65,9 +57,11 @@
             android:layout_height="0dp"
             android:layout_marginTop="15dp"
             android:visibility="@{viewModel.isEmpty().booleanValue() ? View.GONE : View.VISIBLE, default = visible}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/common_i" />
+            app:layout_constraintTop_toBottomOf="@+id/title_tv" />
 
         <TextView
             android:id="@+id/empty_view"

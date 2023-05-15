@@ -50,7 +50,6 @@ class FavoriteFragment : Fragment() {
                 RecyclerView.VERTICAL,
                 false
             )
-            it.addItemDecoration(DividerItemDecoration(context, 1))
         }
     }
 
