@@ -13,6 +13,7 @@ import com.kosim97.mulgaTalkTalk.databinding.AutoSlideLayoutBinding
 
 class AutoSlideAdapter: ListAdapter<AutoSlideData, AutoSlideAdapter.AutoSlideViewHolder>(diffUtil) {
     private var mContext: Context? = null
+    private var size : Int? = 1
     inner class AutoSlideViewHolder(val binding: AutoSlideLayoutBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(currentItem: AutoSlideData) {
             binding.slideItem = currentItem
@@ -27,7 +28,7 @@ class AutoSlideAdapter: ListAdapter<AutoSlideData, AutoSlideAdapter.AutoSlideVie
     }
 
     override fun onBindViewHolder(holder: AutoSlideViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(currentList[position%size!!])
         holder.itemView.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(getItem(position).title)
@@ -36,7 +37,12 @@ class AutoSlideAdapter: ListAdapter<AutoSlideData, AutoSlideAdapter.AutoSlideVie
     }
 
     override fun submitList(list: MutableList<AutoSlideData>?) {
+        size = list?.size
         super.submitList(list)
+    }
+
+    override fun getItemCount(): Int {
+        return Int.MAX_VALUE
     }
 
     companion object {

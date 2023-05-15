@@ -11,13 +11,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.kosim97.mulgaTalkTalk.R
 import com.kosim97.mulgaTalkTalk.data.local.model.AutoSlideData
 import com.kosim97.mulgaTalkTalk.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -26,6 +27,9 @@ class HomeFragment : Fragment() {
     private var isInitView = false
     private lateinit var slideAdapter: AutoSlideAdapter
     private val slideItem = mutableListOf<AutoSlideData>()
+    private var slidePosition = 0
+
+    private val slideFlow = MutableSharedFlow<Boolean>(replay = 0)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,17 +49,27 @@ class HomeFragment : Fragment() {
         initObserver()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("test","resume")
+        viewLifecycleOwner.lifecycleScope.launch {
+            slideFlow.emit(true)
+        }
+    }
+
     private fun initView() {
         if (!isInitView) {
-            slideAdapter = AutoSlideAdapter()
             homeViewModel.initData()
             homeViewModel.getFirebase()
             isInitView = true
         }
-        binding.autoSlide.adapter = slideAdapter
         binding.navigateChart.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_monthChartFragment)
         }
+        if (::slideAdapter.isInitialized) {
+            binding.autoSlide.adapter = slideAdapter
+        }
+        setAutoSlide()
     }
 
     private fun initObserver() {
@@ -67,6 +81,17 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch{
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                slideFlow.collectLatest {
+                    if (it) {
+                        delay(3000)
+                        slidePosition++
+                        binding.autoSlide.currentItem = slidePosition
+                    }
+                }
+            }
+        }
     }
 
     private fun setSlideItem(data: List<String>) {
@@ -74,6 +99,34 @@ class HomeFragment : Fragment() {
         data.forEachIndexed { index, s ->
             slideItem.add(AutoSlideData(s, img.getDrawable(index)!!))
         }
+        slideAdapter = AutoSlideAdapter()
+        binding.autoSlide.adapter = slideAdapter
         slideAdapter.submitList(slideItem)
+    }
+
+    private fun setAutoSlide() {
+        binding.autoSlide.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                slidePosition = position
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                when (state) {
+                    ViewPager2.SCROLL_STATE_IDLE -> {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            slideFlow.emit(true)
+                        }
+                    }
+                    ViewPager2.SCROLL_STATE_DRAGGING -> {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            slideFlow.emit(false)
+                        }
+                    }
+                    ViewPager2.SCROLL_STATE_SETTLING -> { }
+                }
+            }
+        })
     }
 }
