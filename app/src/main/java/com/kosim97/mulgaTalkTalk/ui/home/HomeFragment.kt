@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kosim97.mulgaTalkTalk.R
 import com.kosim97.mulgaTalkTalk.data.local.model.AutoSlideData
 import com.kosim97.mulgaTalkTalk.databinding.FragmentHomeBinding
+import com.kosim97.mulgaTalkTalk.ui.common.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,6 +31,7 @@ class HomeFragment : Fragment() {
     private var slidePosition = 0
 
     private val slideFlow = MutableSharedFlow<Boolean>(replay = 0)
+    private var loadingDialog: LoadingDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +61,8 @@ class HomeFragment : Fragment() {
 
     private fun initView() {
         if (!isInitView) {
+            loadingDialog = LoadingDialog(requireContext())
+            loadingDialog?.show()
             homeViewModel.initData()
             homeViewModel.getFirebase()
             isInitView = true
@@ -78,6 +82,7 @@ class HomeFragment : Fragment() {
                 homeViewModel.slideDataList.collect {
                     Log.d("test","asd $it")
                     setSlideItem(it)
+                    loadingDialog?.dismiss()
                 }
             }
         }
