@@ -19,8 +19,8 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/cm_btn_title_back_n"
             android:onClick="@{()-> viewModel.clickBackBtn()}"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:textSize="25dp"
             android:text="@{viewModel.title}"
             android:textColor="@color/black"
@@ -51,17 +51,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/favorite_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="@{viewModel.updateDate}"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button"
+            tools:text="adsadasd" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favorite_detail_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:visibility="@{viewModel.isEmpty().booleanValue() ? View.GONE : View.VISIBLE, default = visible}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/favorite_date" />
 
         <TextView
             android:id="@+id/empty_view"

@@ -34,6 +34,7 @@ class FavoriteDetailViewModel @Inject constructor(
 
     val isEmpty = MutableStateFlow(false)
     val date = sharedPref.getString("KEY_API_DATE", appDate)
+    val updateDate = "업데이트 날짜: $date"
 
     private var mRegion: String = ""
     private var mProduct: String = ""

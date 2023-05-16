@@ -45,11 +45,6 @@ class FavoriteFragment : Fragment() {
     private fun initView() {
         favoriteBinding.favoriteRv.also {
             it.adapter = favoriteAdapter
-            it.layoutManager = LinearLayoutManager(
-                context,
-                RecyclerView.VERTICAL,
-                false
-            )
         }
     }
 
