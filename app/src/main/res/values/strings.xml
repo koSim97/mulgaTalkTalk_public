@@ -10,6 +10,11 @@
     <string name="network_error_txt">네트워크 연결을 확인 후 재시도 해주세요.</string>
     <string name="no_product">현재 등록된 물가 정보가 없어요.</string>
 
+    <string name="help_title">검색 안내</string>
+    <string name="help_region_title">지역 검색 방법</string>
+    <string name="help_default_title">기본 생필품 목록</string>
+    <string name="help_rotate_title">변동 생필품 목록</string>
     <string name="help_region_example1">강남구 -> 강남</string>
     <string name="help_region_example2">중구 -> 중구</string>
+    <string name="help_example">* 기본, 변동 생필품 항목은 존재하지 않을 수도 있어요.\n   해당 항목 외에도 존재할 수 있으니 원하는 물품을 검색해 보세요.</string>
 </resources>
