@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.kosim97.mulgaTalkTalk.ui.help.HelpViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/cm_btn_title_back_n"
+            android:onClick="@{() -> viewModel.clickBackBtn()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textSize="25dp"
+            android:text="검색 안내"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/region_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="지역 검색 방법"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/region_help_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/home_itme_shape"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/region_help">
+
+            <ImageView
+                android:id="@+id/region_dot1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_dot"
+                app:layout_constraintBottom_toBottomOf="@+id/region_help_text1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/region_help_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/help_region_example1"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                app:layout_constraintStart_toEndOf="@+id/region_dot1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/region_dot2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_dot"
+                app:layout_constraintBottom_toBottomOf="@+id/region_help_text2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/region_dot1" />
+
+            <TextView
+                android:id="@+id/region_help_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/help_region_example2"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                app:layout_constraintStart_toEndOf="@+id/region_dot2"
+                app:layout_constraintTop_toBottomOf="@+id/region_dot1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <TextView
+            android:id="@+id/product_help_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="기본 생필품 목록"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/region_help_layout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/product_help_default_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:padding="5dp"
+            android:background="@drawable/home_itme_shape"
+            helpItem="@{viewModel.productList}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/product_help_default"/>
+
+        <TextView
+            android:id="@+id/product_help_rotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="변동 생필품 목록"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/product_help_default_rv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/product_help_rotate_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:padding="5dp"
+            android:background="@drawable/home_itme_shape"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/product_help_rotate"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="* 변동, 기본 생필품 항목은 존재하지 않을 수도 있어요.\n   해당 항목 외에도 존재할 수 있으니 원하는 물품을 검색해 보세요."
+            android:textColor="#666666"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/product_help_rotate_rv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

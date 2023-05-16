@@ -34,7 +34,7 @@ class LoadingDialog(
             window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             window!!.attributes = wlp
         }
-
+        this.setCancelable(false)
         super.show()
         val animation = findViewById<LottieAnimationView>(R.id.loading_image)
         animation.playAnimation()

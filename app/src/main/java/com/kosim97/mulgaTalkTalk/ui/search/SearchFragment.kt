@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +60,9 @@ class SearchFragment : Fragment() {
         searchBinding.searchRv.also {
             it.adapter = searchAdapter
         }
+        searchBinding.helpBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_search_to_helpFragment)
+        }
     }
 
     private fun initObserver() {
@@ -100,7 +104,7 @@ class SearchFragment : Fragment() {
                     if (it) {
                         Toast.makeText(mContext, "저장되었어요.", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(mContext, "존재하는 즐겨찾기에요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, "이미 있는 즐겨찾기에요.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="data"
+            type="com.kosim97.mulgaTalkTalk.data.local.model.HelpData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_dot"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@{data.region}"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="adsadas" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

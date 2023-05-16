@@ -29,9 +29,17 @@
         android:id="@+id/navigation_search"
         android:name="com.kosim97.mulgaTalkTalk.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/monthChartFragment"
         android:name="com.kosim97.mulgaTalkTalk.ui.home.chart.MonthChartFragment"
         android:label="MonthChartFragment" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.kosim97.mulgaTalkTalk.ui.help.HelpFragment"
+        android:label="HelpFragment" />
 </navigation>

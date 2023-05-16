@@ -146,8 +146,9 @@ class MonthChartFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 chartViewModel.backBtn.collectLatest {
-
-                    findNavController().popBackStack()
+                    if (it) {
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }

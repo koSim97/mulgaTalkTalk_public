@@ -8,13 +8,13 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="homeDetailFragment">
+                  <entry key="helpFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="12" />
+                            <option name="x" value="687" />
+                            <option name="y" value="381" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -65,7 +65,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_navigation_home_to_homeDetailFragment">
+                            <entry key="action_navigation_home_to_monthChartFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

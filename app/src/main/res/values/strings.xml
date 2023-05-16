@@ -9,4 +9,7 @@
     <string name="favorite_title">즐겨찾기</string>
     <string name="network_error_txt">네트워크 연결을 확인 후 재시도 해주세요.</string>
     <string name="no_product">현재 등록된 물가 정보가 없어요.</string>
+
+    <string name="help_region_example1">강남구 -> 강남</string>
+    <string name="help_region_example2">중구 -> 중구</string>
 </resources>
