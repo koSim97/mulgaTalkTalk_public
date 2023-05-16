@@ -9,8 +9,8 @@
     <string name="favorite_title">즐겨찾기</string>
     <string name="network_error_txt">네트워크 연결을 확인 후 재시도 해주세요.</string>
     <string name="no_product">현재 등록된 물가 정보가 없어요.</string>
-    <string name="region_hint">   예시: 강남   </string>
-    <string name="product_hint">   예시: 돼지고기   </string>
+    <string name="region_hint">&#160;&#160;&#160;예시: 강남&#160;&#160;&#160;</string>
+    <string name="product_hint">&#160;&#160;&#160;예시: 돼지고기&#160;&#160;&#160;</string>
     <string name="search_btn">검색</string>
     <string name="save_btn">저장</string>
     <string name="toast_save_complete">저장되었어요.</string>
