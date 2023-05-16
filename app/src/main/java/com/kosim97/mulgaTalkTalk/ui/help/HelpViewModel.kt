@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HelpViewModel @Inject constructor(
-    val app: Application
+    val app: Application,
+    private val firebaseDB: FirebaseDatabase
 ): ViewModel() {
     val productList = ArrayList<HelpData>()
     val rotateItemList = ArrayList<HelpData>()
@@ -45,12 +47,10 @@ class HelpViewModel @Inject constructor(
     }
 
     fun getFirebaseHelpItem() {
-        val database = Firebase.database
-        val myRef = database.getReference("rotate_info")
+        val myRef = firebaseDB.getReference("rotate_info")
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach {
-                    Log.d("test","123 ${it.value}")
                     rotateItemList.add(HelpData(it.value.toString()))
                     viewModelScope.launch(Dispatchers.IO) {
                         _rotateItem.emit(rotateItemList)
@@ -59,7 +59,7 @@ class HelpViewModel @Inject constructor(
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.d("test","fail")
+
             }
         })
     }
