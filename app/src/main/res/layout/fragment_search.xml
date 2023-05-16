@@ -15,13 +15,37 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <TextView
+            android:id="@+id/search_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="상세검색"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/help_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_help_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/search_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/et_region_search"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edit_box_shape"
             android:fontFamily="@font/roboto_regular"
             android:hint="   예시: 강남   "
@@ -36,15 +60,16 @@
             app:layout_constraintBottom_toBottomOf="@+id/et_product_search"
             app:layout_constraintEnd_toStartOf="@+id/et_product_search"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_title" />
 
         <EditText
             android:id="@+id/et_product_search"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edit_box_shape"
             android:fontFamily="@font/roboto_regular"
             android:hint="   예시: 돼지고기   "
@@ -56,7 +81,7 @@
             android:textColor="@color/black"
             android:textColorHint="#AEAEAE"
             android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/search_btn"
+            app:layout_constraintTop_toBottomOf="@+id/search_title"
             app:layout_constraintEnd_toStartOf="@+id/search_btn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/et_region_search" />
@@ -66,8 +91,8 @@
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/btn_selector"
             android:fontFamily="@font/roboto_regular"
             android:onClick="@{()-> viewModel.clickSearchBtn(etRegionSearch.getText().toString(), etProductSearch.getText().toString())}"
@@ -75,15 +100,15 @@
             app:layout_constraintEnd_toStartOf="@+id/save_btn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/et_product_search"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/search_title"/>
 
         <Button
             android:id="@+id/save_btn"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/btn_selector"
             android:fontFamily="@font/roboto_regular"
             android:onClick="@{()-> viewModel.saveFavorite(etRegionSearch.getText().toString(), etProductSearch.getText().toString())}"
@@ -91,7 +116,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/search_btn"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/search_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_rv"
