@@ -102,9 +102,20 @@ class SearchFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchViewModel.isSameItem.collectLatest {
                     if (it) {
-                        Toast.makeText(mContext, "저장되었어요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, getString(R.string.toast_save_complete), Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(mContext, "이미 있는 즐겨찾기에요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, getString(R.string.toast_save_exist), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchViewModel.dataEmpty.collectLatest {
+                    if (it) {
+                        Toast.makeText(requireContext(), getString(R.string.toast_save_not_valid), Toast.LENGTH_SHORT).show()
+                        loadingDialog?.dismiss()
                     }
                 }
             }

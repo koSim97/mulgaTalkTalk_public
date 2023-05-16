@@ -40,7 +40,6 @@ class FavoriteAdapter :
             val intent = Intent(mContext, FavoriteDetailActivity::class.java).apply {
                 putExtra("region", getItem(position)?.room_region)
                 putExtra("product", getItem(position)?.room_product)
-                Log.d("test","no ${getItem(position)?.room_no}")
                 putExtra("no", getItem(position)?.room_no)
             }
             mContext?.startActivity(intent)

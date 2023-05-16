@@ -166,7 +166,7 @@ class MonthChartFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 chartViewModel.dataEmpty.collectLatest {
                     if (it) {
-                        Toast.makeText(requireContext(), "지역과 물품을 정확히 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.toast_save_not_valid), Toast.LENGTH_SHORT).show()
                         showDialog(false)
                     }
                 }

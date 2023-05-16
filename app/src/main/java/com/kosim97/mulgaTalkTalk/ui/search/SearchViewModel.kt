@@ -41,6 +41,10 @@ class SearchViewModel @Inject constructor(
     val isSameItem: SharedFlow<Boolean>
         get() = _isSameItem
 
+    private val _dataEmpty = MutableSharedFlow<Boolean>(0)
+    val dataEmpty: SharedFlow<Boolean>
+        get() = _dataEmpty
+
     fun getSearchData(): Flow<PagingData<ResultData>> {
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
@@ -67,11 +71,12 @@ class SearchViewModel @Inject constructor(
     fun saveFavorite(region: String, product: String) {
         val saveRegion = region.ifEmpty { " " }
         val saveProduct = product.ifEmpty { " " }
-        if (saveRegion == " " && saveProduct == " ") {
-            Toast.makeText(app, "지역과 물품을 정확히 입력해주세요.", Toast.LENGTH_SHORT).show()
-        } else {
-            var save = true
-            viewModelScope.launch(Dispatchers.IO) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            if (saveRegion.isBlank() && saveProduct.isBlank()) {
+                _dataEmpty.emit(true)
+            } else {
+                var save = true
                 val list = roomInterface.getAll()
                 for (i in list.indices) {
                     if (list[i].room_product == saveProduct && list[i].room_region == saveRegion) {
@@ -84,6 +89,7 @@ class SearchViewModel @Inject constructor(
                     roomInterface.saveFavorite(RoomEntity(saveRegion, saveProduct))
                 }
             }
+
         }
     }
 }

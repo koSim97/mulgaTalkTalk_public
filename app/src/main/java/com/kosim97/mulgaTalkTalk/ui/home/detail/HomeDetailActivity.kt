@@ -76,7 +76,6 @@ class HomeDetailActivity : AppCompatActivity() {
                                 loadingDialog.show()
                             }
                             else -> {
-                                Log.d("test","dismiss ${loadStates.append}")
                                 loadingDialog.dismiss()
                             }
                         }

@@ -53,7 +53,6 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("test","resume")
         viewLifecycleOwner.lifecycleScope.launch {
             slideFlow.emit(true)
         }
@@ -80,7 +79,6 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.slideDataList.collect {
-                    Log.d("test","asd $it")
                     setSlideItem(it)
                     loadingDialog?.dismiss()
                 }
