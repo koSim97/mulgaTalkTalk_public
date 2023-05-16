@@ -41,14 +41,17 @@ class HelpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as NavigationUtil).visibleNav(false)
         initObserver()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         (requireActivity() as NavigationUtil).visibleNav(true)
+    }
 
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as NavigationUtil).visibleNav(false)
     }
 
     private fun initView() {

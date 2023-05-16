@@ -1,6 +1,7 @@
 package com.kosim97.mulgaTalkTalk.ui.home.chart
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kosim97.mulgaTalkTalk.data.api.ApiResult
@@ -34,6 +35,9 @@ class MonthChartViewModel @Inject constructor(
     private val _backBtn = MutableSharedFlow<Boolean>(0)
     val backBtn: SharedFlow<Boolean>
         get() = _backBtn
+    private val _dataEmpty = MutableSharedFlow<Boolean>(0)
+    val dataEmpty: SharedFlow<Boolean>
+        get() = _dataEmpty
 
     val isEmpty = MutableStateFlow(false)
 
@@ -47,42 +51,46 @@ class MonthChartViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _loading.emit(true)
             chartList.clear()
-            while (end != 0) {
-                val date = SimpleDateFormat("yyyy-MM").format(cal.time)
-                repository.getProductDetail(1,1, region, product, date)
-                    .flowOn(Dispatchers.IO)
-                    .collect{
-                        when(it) {
-                            is ApiResult.Success -> {
-                                val price = it.data?.list?.row?.get(0)?.productPrice?.toInt()
-                                if (price != null) {
-                                    chartList.add(ChartData(date, price))
-                                    end--
-                                } else {
+            if (region.isEmpty() || product.isEmpty()) {
+                _dataEmpty.emit(true)
+            } else {
+                while (end != 0) {
+                    val date = SimpleDateFormat("yyyy-MM").format(cal.time)
+                    repository.getProductDetail(1,1, region, product, date)
+                        .flowOn(Dispatchers.IO)
+                        .collect{
+                            when(it) {
+                                is ApiResult.Success -> {
+                                    val price = it.data?.list?.row?.get(0)?.productPrice?.toInt()
+                                    if (price != null) {
+                                        chartList.add(ChartData(date, price))
+                                        end--
+                                    } else {
+                                        cnt++
+                                    }
+                                }
+                                else -> {
                                     cnt++
                                 }
                             }
-                            else -> {
-                                cnt++
-                            }
                         }
+                    if (cal.get(Calendar.MONTH) == 1) {
+                        cal.add(Calendar.YEAR, -1)
+                        cal.add(Calendar.MONTH, 11)
+                    } else {
+                        cal.add(Calendar.MONTH, -1)
                     }
-                if (cal.get(Calendar.MONTH) == 1) {
-                    cal.add(Calendar.YEAR, -1)
-                    cal.add(Calendar.MONTH, 11)
-                } else {
-                    cal.add(Calendar.MONTH, -1)
+                    if (cnt > 5) {
+                        isEmpty.emit(true)
+                        break
+                    } else {
+                        isEmpty.emit(false)
+                    }
                 }
-                if (cnt > 5) {
-                    isEmpty.emit(true)
-                    break
-                } else {
-                    isEmpty.emit(false)
-                }
+                _chartDataList.emit(chartList.reversed())
+                _labelText.emit("$region $product")
+                _loading.emit(false)
             }
-            _chartDataList.emit(chartList.reversed())
-            _labelText.emit("$region $product")
-            _loading.emit(false)
         }
     }
 

@@ -15,8 +15,9 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="3dp"
             android:background="@drawable/cm_btn_title_back_n"
             android:onClick="@{()-> viewModel.clickBackBtn()}"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +26,7 @@
         <EditText
             android:id="@+id/et_region_search"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/edit_box_shape"
@@ -46,7 +46,7 @@
         <EditText
             android:id="@+id/et_product_search"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
@@ -67,7 +67,7 @@
         <Button
             android:id="@+id/search_btn"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
@@ -76,6 +76,18 @@
             android:onClick="@{()-> viewModel.getFiveMonthData(etRegionSearch.getText().toString(), etProductSearch.getText().toString())}"
             android:text="검색"
             app:layout_constraintStart_toEndOf="@+id/et_product_search"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/help_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_help_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/search_btn"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.github.mikephil.charting.charts.LineChart

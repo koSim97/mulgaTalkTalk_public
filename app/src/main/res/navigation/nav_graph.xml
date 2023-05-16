@@ -37,7 +37,11 @@
     <fragment
         android:id="@+id/monthChartFragment"
         android:name="com.kosim97.mulgaTalkTalk.ui.home.chart.MonthChartFragment"
-        android:label="MonthChartFragment" />
+        android:label="MonthChartFragment" >
+        <action
+            android:id="@+id/action_monthChartFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/helpFragment"
         android:name="com.kosim97.mulgaTalkTalk.ui.help.HelpFragment"

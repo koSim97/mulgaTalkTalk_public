@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,6 +18,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.kosim97.mulgaTalkTalk.R
 import com.kosim97.mulgaTalkTalk.databinding.FragmentMonthChartBinding
 import com.kosim97.mulgaTalkTalk.ui.common.LoadingDialog
 import com.kosim97.mulgaTalkTalk.util.NavigationUtil
@@ -53,16 +55,23 @@ class MonthChartFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        (requireActivity() as NavigationUtil).visibleNav(true)
         super.onDestroyView()
+        (requireActivity() as NavigationUtil).visibleNav(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as NavigationUtil).visibleNav(false)
     }
 
     private fun initView() {
         loadingDialog = LoadingDialog(requireContext())
-        (requireActivity() as NavigationUtil).visibleNav(false)
         initChart()
         setChartData()
         initObserver()
+        binding.helpBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_monthChartFragment_to_helpFragment)
+        }
     }
 
     private fun initChart() {
@@ -148,6 +157,17 @@ class MonthChartFragment : Fragment() {
                 chartViewModel.backBtn.collectLatest {
                     if (it) {
                         findNavController().popBackStack()
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                chartViewModel.dataEmpty.collectLatest {
+                    if (it) {
+                        Toast.makeText(requireContext(), "지역과 물품을 정확히 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        showDialog(false)
                     }
                 }
             }
