@@ -4,11 +4,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="api_key">70546e7a7a73696d39337074555774</string>
 
-    <string name="home_title">물가톡톡</string>
+    <string name="intro_title">물가톡톡\n한눈에 서울 물가보기</string>
     <string name="search_title">상세검색</string>
     <string name="favorite_title">즐겨찾기</string>
     <string name="network_error_txt">네트워크 연결을 확인 후 재시도 해주세요.</string>
     <string name="no_product">현재 등록된 물가 정보가 없어요.</string>
+    <string name="region_hint">   예시: 강남   </string>
+    <string name="product_hint">   예시: 돼지고기   </string>
+    <string name="search_btn">검색</string>
+    <string name="save_btn">저장</string>
 
     <string name="home_chart_btn">5개월 물가 차트 조회</string>
 
