@@ -2,6 +2,9 @@ package com.kosim97.mulgaTalkTalk.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +36,12 @@ object CommonModule {
             "KEY_API_DATE",
             SimpleDateFormat("yyyy-MM").format(System.currentTimeMillis())
         )!!
+    }
+
+    @Singleton
+    @Provides
+    fun getFirebaseDB(): FirebaseDatabase {
+        return Firebase.database
     }
 }
 

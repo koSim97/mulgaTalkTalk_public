@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val app: Application,
-    private val repository: RegionRepository
+    private val firebaseDB: FirebaseDatabase
 ) : ViewModel() {
     val item = ArrayList<HomeData>()
     private val img = app.resources.obtainTypedArray(R.array.img_array)
@@ -32,6 +33,9 @@ class HomeViewModel @Inject constructor(
     private val _slideDataList = MutableSharedFlow<List<String>>(0)
     val slideDataList: SharedFlow<List<String>>
         get() = _slideDataList
+    private val _cancelLoading = MutableSharedFlow<Boolean>(0)
+    val cancelLoading: SharedFlow<Boolean>
+        get() = _cancelLoading
 
     fun initData() {
         item.clear()
@@ -41,12 +45,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFirebase() {
-        val database = Firebase.database
-        val myRef = database.getReference("url_info")
+        val myRef = firebaseDB.getReference("url_info")
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach {
-                    Log.d("test","123 ${it.value}")
                     slideList.add(it.value.toString())
                 }
                 viewModelScope.launch(Dispatchers.IO){
@@ -55,9 +57,10 @@ class HomeViewModel @Inject constructor(
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.d("test","fail")
+                viewModelScope.launch {
+                    _cancelLoading.emit(true)
+                }
             }
-
         })
     }
 }

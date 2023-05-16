@@ -97,6 +97,15 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.cancelLoading.collectLatest {
+                    if (it) {
+                        loadingDialog?.dismiss()
+                    }
+                }
+            }
+        }
     }
 
     private fun setSlideItem(data: List<String>) {
