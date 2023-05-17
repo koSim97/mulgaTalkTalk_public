@@ -16,6 +16,7 @@
     <string name="toast_save_complete">저장되었어요.</string>
     <string name="toast_save_exist">이미 있는 즐겨찾기에요.</string>
     <string name="toast_save_not_valid">지역과 물품을 정확히 입력해 주세요.</string>
+    <string name="delete_favorite_popup">즐겨찾기를 삭제 할까요?</string>
 
     <string name="home_chart_btn">5개월 물가 차트 조회</string>
 

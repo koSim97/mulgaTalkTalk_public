@@ -3,21 +3,22 @@ package com.kosim97.mulgaTalkTalk.ui.favorite.detail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.kosim97.mulgaTalkTalk.ui.common.LoadingDialog
 import com.kosim97.mulgaTalkTalk.R
+import com.kosim97.mulgaTalkTalk.data.room.RoomInterface
 import com.kosim97.mulgaTalkTalk.databinding.ActivityFavoriteDetailBinding
+import com.kosim97.mulgaTalkTalk.ui.common.CommonPopup
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FavoriteDetailActivity : AppCompatActivity() {
@@ -25,6 +26,9 @@ class FavoriteDetailActivity : AppCompatActivity() {
     private val favoriteDetailViewModel: FavoriteDetailViewModel by viewModels()
     private val favoriteDetailAdapter = FavoriteDetailAdapter()
     lateinit var loadingDialog: LoadingDialog
+    @Inject
+    lateinit var database: RoomInterface
+    private var mNo = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +48,11 @@ class FavoriteDetailActivity : AppCompatActivity() {
 
         val region: String? = intent.getStringExtra("region")
         val product: String? = intent.getStringExtra("product")
-        val no: Int = intent.getIntExtra("no", 0)
+        mNo= intent.getIntExtra("no", 0)
+
         if (region != null) {
             if (product != null) {
-                favoriteDetailViewModel.initData(region, product, no)
+                favoriteDetailViewModel.initData(region, product)
             }
         }
 
@@ -88,6 +93,41 @@ class FavoriteDetailActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                favoriteDetailViewModel.showDelete.collectLatest {
+                    if (it) {
+                        showDeletePopup()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showDeletePopup() {
+        val popup = CommonPopup(
+            this,
+            CommonPopup.ButtonType.TWO,
+            getString(R.string.delete_favorite_popup),
+            "취소",
+            "확인"
+        )
+        popup.setLeftBtnOnclickListener {
+            popup.dismiss()
+        }
+        popup.setRightBtn2OnclickListener {
+            popup.dismiss()
+            deleteFavorite()
+        }
+        popup.setCancelable(false)
+        popup.show()
+    }
+
+    private fun deleteFavorite() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            database.deleteNo(mNo)
+            finish()
         }
     }
 }

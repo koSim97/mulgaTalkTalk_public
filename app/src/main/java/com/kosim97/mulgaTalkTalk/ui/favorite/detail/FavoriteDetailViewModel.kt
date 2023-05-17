@@ -29,6 +29,9 @@ class FavoriteDetailViewModel @Inject constructor(
     private val _backBtn = MutableSharedFlow<Boolean>(replay = 0)
     val backBtn: SharedFlow<Boolean>
         get() = _backBtn
+    private val _showDelete = MutableSharedFlow<Boolean>(0)
+    val showDelete : SharedFlow<Boolean>
+        get() = _showDelete
 
     val isEmpty = MutableStateFlow(false)
     val date = sharedPref.getString("KEY_API_DATE", appDate)
@@ -36,13 +39,11 @@ class FavoriteDetailViewModel @Inject constructor(
 
     private var mRegion: String = ""
     private var mProduct: String = ""
-    private var mNo: Int = 0
     var title: String = ""
 
-    fun initData(region: String, product: String, no: Int) {
+    fun initData(region: String, product: String) {
         mRegion = region
         mProduct = product
-        mNo = no
         title = "$mRegion $mProduct"
     }
 
@@ -71,8 +72,9 @@ class FavoriteDetailViewModel @Inject constructor(
 
     fun deleteDB() {
         viewModelScope.launch(Dispatchers.IO) {
-            database.deleteNo(mNo)
-            _backBtn.emit(true)
+            _showDelete.emit(true)
+//            database.deleteNo(mNo)
+//            _backBtn.emit(true)
         }
     }
 }
