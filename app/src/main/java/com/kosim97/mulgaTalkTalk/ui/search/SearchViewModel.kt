@@ -58,6 +58,16 @@ class SearchViewModel @Inject constructor(
                 )
             }
         ).flow
+            .map {
+                it.map { data ->
+                    if (data.productPrice == "0") {
+                        data.productPrice = "미입고"
+                    } else {
+                        data.productPrice = data.productPrice + "원"
+                    }
+                    data
+                }
+            }
     }
 
     fun clickSearchBtn(region: String, product: String) {

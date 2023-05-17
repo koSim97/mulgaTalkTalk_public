@@ -39,6 +39,16 @@ class HomeDetailViewModel @Inject constructor(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { RegionPaging(repository, mRegion, date!!, isEmpty) }
         ).flow
+            .map {
+                it.map { data ->
+                    if (data.productPrice == "0") {
+                        data.productPrice = "미입고"
+                    } else {
+                        data.productPrice = data.productPrice + "원"
+                    }
+                    data
+                }
+            }
     }
 
     fun clickBackBtn() {

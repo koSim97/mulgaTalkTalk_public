@@ -89,7 +89,7 @@
             android:layout_marginEnd="5dp"
             android:textAlignment="center"
             android:layout_gravity="center"
-            android:text="@{detailItem.productPrice +'원'}"
+            android:text="@{detailItem.productPrice}"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/black"
             android:textSize="15dp"
